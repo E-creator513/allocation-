@@ -1,23 +1,28 @@
-CFLAGS=--std=c17 -Wall -pedantic -Isrc/ -ggdb -Wextra -Werror -DDEBUG
-BUILDDIR=build
-SRCDIR=src
-CC=gcc
+APP_NAME = allocator
 
-all: $(BUILDDIR)/mem.o $(BUILDDIR)/util.o $(BUILDDIR)/mem_debug.o
-	$(CC) -o $(BUILDDIR)/main $^
+CC = gcc
+CFLAGS = --std=c18 -Isrc/ -pedantic -Wall -Werror
+SRC_DIR = src/
+BUILD_DIR = build/
+APP = $(BUILD_DIR)$(APP_NAME) 
 
-build:
-	mkdir -p $(BUILDDIR)
+C_SRC_FILES = $(wildcard $(SRC_DIR)*.c)
+OBJ_FILES = $(addprefix $(BUILD_DIR),$(notdir $(C_SRC_FILES:.c=.o)))
 
-$(BUILDDIR)/mem.o: $(SRCDIR)/mem.c build
-	$(CC) -c $(CFLAGS) $< -o $@
+.PHONY: all clean
 
-$(BUILDDIR)/mem_debug.o: $(SRCDIR)/mem_debug.c build
-	$(CC) -c $(CFLAGS) $< -o $@
+define build-obj
+	$(CC) -c $(CFLAGS) $< -o $@ 
+endef
 
-$(BUILDDIR)/util.o: $(SRCDIR)/util.c build
-	$(CC) -c $(CFLAGS) $< -o $@
+all: $(APP)
+
+$(APP): $(OBJ_FILES)
+	$(CC) -o $(APP) $^
+
+$(OBJ_FILES): $(BUILD_DIR)%.o: $(SRC_DIR)%.c
+	mkdir -p $(BUILD_DIR)
+	$(call build-obj) 
 
 clean:
-	rm -rf $(BUILDDIR)
-
+	rm  -rf $(BUILD_DIR)*

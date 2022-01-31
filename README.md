@@ -1,6 +1,12 @@
 # allocation-
 yet unix environment 
+#Prerequisites for this lab session are the:
+
+-Object header
+-Virtual Memory and Memory Layout
+-Mutator, Collector, Allocator
 ### Build & run
+
 - To build you need to type `make` in the root directory.
 - After that to run you need to type `./build/allocator`
 ### Example of execution 

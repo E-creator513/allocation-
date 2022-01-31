@@ -1,6 +1,6 @@
 # allocation-
 yet unix environment 
-#33Prerequisites for this lab session are the:
+###Prerequisites for this lab session are the:
 
 - Object header
 - Virtual Memory and Memory Layout
